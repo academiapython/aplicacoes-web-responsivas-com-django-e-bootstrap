@@ -13,7 +13,7 @@
         <title>Hello, world!</title>
     </head>
 
-    <body>
+    <body class="bg-light">
 
          <div class="container-fluid bg-dark mb-2">
             <div class="row justify-content-center">
@@ -25,18 +25,43 @@
             </div>
         </div>
 
-
-         <main class="bg-light">
+         <main>
             <div class="container-fluid">
                 <div class="row justify-content-center">
-                    <div class="col-xl-8">
-                        alguma coisa
+
+                    <div class="col-xl-5 col-md-6">
+
+                        <form method="post" action="{% url 'mensagem' %}">
+                            {% csrf_token %}
+                            <div class="card border-0 px-sm-0 p-md-5 mt-3">
+
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {% if message.tags %}
+                                            <div class="alert alert-success text-center" role="alert">
+                                                {{ message }}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                <div class="card-header bg-white border-0">
+                                    <h1 class="text-success text-center">Contato</h1>
+                                </div>
+                                {{ form }}
+                                <div class="card-footer p-0 pt-3 bg-white border-0">
+                                    <button type="submit" class="btn btn-success col-12">Enviar mensagem</button>
+                                </div>
+
+                            </div>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </main>
 
-        {% include 'fragments/footer.html' with var_position='fixed-bottom' %}
+        {% include 'fragments/footer.html' %}
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
