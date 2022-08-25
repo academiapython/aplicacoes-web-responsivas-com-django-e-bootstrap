@@ -1,0 +1,28 @@
+{% extends 'autenticacao/base.html' %}
+
+{% block title %} Login com redes sociais {% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center mt-5">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="text-center">Login com Redes Sociais</h3>
+    </div>
+    <div class="card-body">
+      <h4> Você está prestes a se conectar à Academia Python com sua conta {{ provider.name }}. </h4>
+
+      <div class="d-flex justify-content-center mt-4">
+        <form method="post">
+          {% csrf_token %}
+          <button class="btn btn-primary btn-larg" type="submit">Continuar</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+

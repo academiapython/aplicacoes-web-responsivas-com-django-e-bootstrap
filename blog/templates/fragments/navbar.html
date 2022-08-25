@@ -18,22 +18,41 @@
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <li class="nav-item">
+                <li class="nav-item my-auto">
                     <a class="nav-link" aria-current="page" href="{% url 'blog' %}">Blog</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item my-auto">
                     <a class="nav-link" href="{% url 'cursos' %}">Cursos</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item my-auto">
                     <a class="nav-link" href="{% url 'contato' %}">Contato</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-
+                {% if user.is_authenticated %}
+                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">
+                            {% if user.socialaccount_set.all.0.get_avatar_url %}
+                                <img src="{{ user.socialaccount_set.all.0.get_avatar_url }}"
+                                    class="rounded-circle"
+                                    alt="{{user.username}}"
+                                     style="height:40px; width:40px">
+                            {% elif user.perfil.foto %}
+                                <img src="{{ user.perfil.foto.url }}"
+                                    class="rounded-circle"
+                                    alt="{{user.username}}"
+                                    style="height:40px; width:40px">
+                            {% else %}
+                                <span>Olá, {{ user.username }}.</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% else %}
+                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
             </ul>
 
             <form class="d-flex">

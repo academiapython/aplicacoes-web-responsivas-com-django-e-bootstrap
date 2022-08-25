@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load socialaccount %}
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
@@ -46,11 +47,11 @@
                                 {% csrf_token %}
 
                                 {% if messages %}
-                                {% for message in messages %}
-                                <div class="alert alert-danger text-center" role="alert">
-                                    {{ message }}
-                                </div>
-                                {% endfor %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
                                 {% endif %}
 
                                 <p class="form-label mt-3"> Usuário ou email</p>
@@ -92,21 +93,21 @@
                                 </div>
 
                                 <div class="d-grid mt-2">
-                                    <button class="btn btn-primary" type="button">
-                                        <i class="fa-brands fa-twitter"></i>
-                                    </button>
-                                </div>
-
-                                <div class="d-grid mt-2">
-                                    <button class="btn btn-danger" type="button">
-                                        <i class="fa-brands fa-google"></i>
-                                    </button>
-                                </div>
-
-                                <div class="d-grid mt-2">
-                                    <button class="btn btn-primary" type="button">
+                                    <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-primary" type="button">
                                         <i class="fa-brands fa-facebook"></i>
-                                    </button>
+                                    </a>
+                                </div>
+
+                                <div class="d-grid mt-2">
+                                    <a href="{% provider_login_url 'google' %}" class="btn btn-danger" type="button">
+                                        <i class="fa-brands fa-google"></i>
+                                    </a>
+                                </div>
+
+                                <div class="d-grid mt-2">
+                                    <a href="{% provider_login_url 'github' %}" class="btn btn-secondary" type="button">
+                                        <i class="fa-brands fa-github"></i>
+                                    </a>
                                 </div>
 
                                 <div class="my-2 text-center">

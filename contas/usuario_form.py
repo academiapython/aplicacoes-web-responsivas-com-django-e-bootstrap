@@ -2,11 +2,14 @@ from django.contrib.auth.models import User
 from django.forms.models import ModelForm
 from django import forms
 
-class PerfilForm(ModelForm):
+from contas.models import Perfil
+
+
+class UserForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['first_name'].required=True
+        self.fields['first_name'].requiredz=True
         self.fields['last_name'].required = True
         self.fields['username'].required = True
         self.fields['email'].required = True
@@ -27,3 +30,12 @@ class PerfilForm(ModelForm):
             'password': forms.PasswordInput(attrs={'class': 'form-control'}),
         }
 
+class PerfilForm(ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['bio', 'foto']
+
+    widget = {
+        'bio': forms.TextInput(attrs={'class': 'form-control'}),
+        'foto': forms.ImageField()
+    }
