@@ -15,4 +15,5 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('criar_conta/', include('contas.urls')),
     path('accounts/', include('allauth.urls')),
+    path('quiz/', include('quiz.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
