@@ -1,167 +1,137 @@
-<!doctype html>
+{% extends "autenticacao_base.html" %}
 {% load static %}
 {% load socialaccount %}
-<html lang="pt-br">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+{% block title %} Tela de Login {% endblock %}
 
-    <script src="https://unpkg.com/htmx.org@1.8.0" integrity="sha384-cZuAZ+ZbwkNRnrKi05G/fjBX+azI9DNOkNYysZ0I/X5ZFgsmMiBXgDZof30F5ofc" crossorigin="anonymous"></script>
+{% block navbar %}
+    {% include 'fragments/navbar.html' %}
+{% endblock %}
 
-    <link rel="stylesheet" href="{% static 'css/global.css' %}">
-
-    <title>Tela de Login</title>
-</head>
-
-<body>
-
-<div class="container-fluid bg-dark mb-2">
-    <div class="row justify-content-center">
-        <div class="col-xl-8">
-            <header class="bg-dark my-2">
-                {% include 'fragments/navbar.html' %}
-            </header>
-        </div>
-    </div>
-</div>
-
-<main>
-    <div class="container-fluid">
+{% block content %}
+    <div class="col-xl-8">
         <div class="row justify-content-center">
-            <div class="col-xl-8">
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
+            <div class="col-md-6">
 
-                        {% if not user.is_authenticated %}
+                {% if not user.is_authenticated %}
 
-                            <div class="card-body my-5 border rounded bg-light p-3">
-                            <div class="mt-3">
-                                <span class="fw-bold fs-2 text-primary">Login</span>
-                            </div>
-                            <form method="post" action="{% url 'login' %}">
-                                {% csrf_token %}
+                    <div class="card-body my-5 border rounded bg-light p-3">
+                    <div class="mt-3">
+                        <span class="fw-bold fs-2 text-primary">Login</span>
+                    </div>
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
 
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <div class="alert alert-danger text-center" role="alert">
-                                            {{ message }}
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-
-                                <p class="form-label mt-3"> Usuário ou email</p>
-                                <div class="form-floating mb-3">
-                                    <input type="text"
-                                           class="form-control"
-                                           id="idEmailLogin"
-                                           name="username"
-                                           value="{{username}}"
-                                           placeholder="name@example.com">
-
-                                    <label for="idEmailLogin">Digite aqui seu email</label>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger text-center" role="alert">
+                                    {{ message }}
                                 </div>
-
-                                <p class="form-label mt-3"> Senha </p>
-                                <div class="form-floating">
-                                    <input type="password"
-                                           class="form-control"
-                                           id="idSenhaLogin"
-                                           name="password"
-                                           value="{{password}}"
-                                           placeholder="Senha">
-
-                                    <label for="idSenhaLogin">Digite aqui sua senha</label>
-                                </div>
-
-                                <div class="my-3 text-end">
-                                    <a class="btn" href="{% url 'password_reset' %}">
-                                            <span class="text-success fw-bold">
-                                                Esqueceu sua senha?
-                                            </span>
-                                    </a>
-                                </div>
-
-                                <div class="d-grid mt-2">
-                                    <button class="btn btn-success" type="submit">
-                                        Logar
-                                    </button>
-                                </div>
-
-                                <div class="d-grid mt-2">
-                                    <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-primary" type="button">
-                                        <i class="fa-brands fa-facebook"></i>
-                                    </a>
-                                </div>
-
-                                <div class="d-grid mt-2">
-                                    <a href="{% provider_login_url 'google' %}" class="btn btn-danger" type="button">
-                                        <i class="fa-brands fa-google"></i>
-                                    </a>
-                                </div>
-
-                                <div class="d-grid mt-2">
-                                    <a href="{% provider_login_url 'github' %}" class="btn btn-secondary" type="button">
-                                        <i class="fa-brands fa-github"></i>
-                                    </a>
-                                </div>
-
-                                <div class="my-2 text-center">
-                                    <a href="{% url 'criar_conta' %}" class="btn text-secondary fw-bold">
-                                        Criar conta
-                                    </a>
-                                </div>
-
-                            </form>
-                        </div>
-
-                        {% else %}
-
-                            <div class="card my-5">
-                                <div class="card-header p-5">
-                                    <h3 class="text-success"> {{ user.username }}, você já logado no sistema. </h3>
-                                    <p class="h5 text-center text-primary">Deseja realmente sair?</p>
-                                </div>
-
-                                <div class="card-body d-flex justify-content-center">
-
-                                    <button type="button"
-                                            class="btn btn-danger me-2"
-                                            hx-get="autenticacao/processa_logout/"
-                                            hx-trigger="click"
-                                            hx-target="body">
-                                        Sim
-                                    </button>
-
-                                    <button type="button"
-                                            class="btn btn-primary"
-                                            hx-get="autenticacao/processa_redirect_home/"
-                                            hx-trigger="click"
-                                            hx-target="body"
-                                            hx-swap="outerHTML"
-                                            hx-push-url="true">
-                                        Não
-                                    </button>
-                                </div>
-                            </div>
-
+                            {% endfor %}
                         {% endif %}
 
-                    </div>
+                        <p class="form-label mt-3"> Usuário ou email</p>
+                        <div class="form-floating mb-3">
+                            <input type="text"
+                                   class="form-control"
+                                   id="idEmailLogin"
+                                   name="username"
+                                   value="{{username}}"
+                                   placeholder="name@example.com">
+
+                            <label for="idEmailLogin">Digite aqui seu email</label>
+                        </div>
+
+                        <p class="form-label mt-3"> Senha </p>
+                        <div class="form-floating">
+                            <input type="password"
+                                   class="form-control"
+                                   id="idSenhaLogin"
+                                   name="password"
+                                   value="{{password}}"
+                                   placeholder="Senha">
+
+                            <label for="idSenhaLogin">Digite aqui sua senha</label>
+                        </div>
+
+                        <div class="my-3 text-end">
+                            <a class="btn" href="{% url 'password_reset' %}">
+                                    <span class="text-success fw-bold">
+                                        Esqueceu sua senha?
+                                    </span>
+                            </a>
+                        </div>
+
+                        <div class="d-grid mt-2">
+                            <button class="btn btn-success" type="submit">
+                                Logar
+                            </button>
+                        </div>
+
+                        <div class="d-grid mt-2">
+                            <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-primary" type="button">
+                                <i class="fa-brands fa-facebook"></i>
+                            </a>
+                        </div>
+
+                        <div class="d-grid mt-2">
+                            <a href="{% provider_login_url 'google' %}" class="btn btn-danger" type="button">
+                                <i class="fa-brands fa-google"></i>
+                            </a>
+                        </div>
+
+                        <div class="d-grid mt-2">
+                            <a href="{% provider_login_url 'github' %}" class="btn btn-secondary" type="button">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+
+                        <div class="my-2 text-center">
+                            <a href="{% url 'criar_conta' %}" class="btn text-secondary fw-bold">
+                                Criar conta
+                            </a>
+                        </div>
+
+                    </form>
                 </div>
+
+                {% else %}
+
+                    <div class="card my-5">
+                        <div class="card-header p-5">
+                            <h3 class="text-success"> {{ user.username }}, você já logado no sistema. </h3>
+                            <p class="h5 text-center text-primary">Deseja realmente sair?</p>
+                        </div>
+
+                        <div class="card-body d-flex justify-content-center">
+
+                            <button type="button"
+                                    class="btn btn-danger me-2"
+                                    hx-get="autenticacao/processa_logout/"
+                                    hx-trigger="click"
+                                    hx-target="body">
+                                Sim
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    hx-get="autenticacao/processa_redirect_home/"
+                                    hx-trigger="click"
+                                    hx-target="body"
+                                    hx-swap="outerHTML"
+                                    hx-push-url="true">
+                                Não
+                            </button>
+                        </div>
+                    </div>
+
+                {% endif %}
+
             </div>
         </div>
     </div>
-</main>
+{% endblock %}
 
-<div class="footer-botom">{% include 'fragments/footer.html' %}</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+
+
