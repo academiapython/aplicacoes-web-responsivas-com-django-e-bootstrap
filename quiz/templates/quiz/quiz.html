@@ -16,51 +16,38 @@
 
     {% endif %}
 
-    <p class="mt-1 p-2 fs-5"> {{questao.enunciado}} </p>
+    <p class="mt-2">
+        {{questao.enunciado}}
+    </p>
 
-    <form method="POST" action="{% url 'resposta' %}">
-        {% csrf_token %}
-        <div class="card-body">
+    <div class="card-body">
 
-            <div class="form-check">
+        <div class="form-check">
 
-                <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush">
 
-                    {% for alternativa in questao.alternativa_set.all %}
+                {% for alternativa in questao.alternativa_set.all %}
 
                     <div class="list-group-item">
                         <input class="form-check-input"
                                type="radio"
-                               name="resposta"
-                               id="flexRadioDefault1"
-                               value="{{ alternativa.isCorreta }}">
+                               name="flexRadioDefault"
+                               id="flexRadioDefault1">
 
-                        <label class="form-check-label mb-3 fs-5" for="flexRadioDefault1">
-                            {{ alternativa.texto }}
+                        <label class="form-check-label"
+                               for="flexRadioDefault1">
+
+                            Alternava {{ alternativa.texto }}
+
                         </label>
                     </div>
 
-                    {% endfor %}
+                {% endfor %}
 
-                </ul>
+            </ul>
 
-                <button hx-post="{% url 'resposta' %}"
-                        hx-target="#msg_feedback"
-                        hx-trigger="click"
-                        class="btn btn-primary mt-2 d-grid col-12">
+            <a href="#" class="btn btn-success mt-2 d-grid">Responder</a>
 
-                    Responder
-
-                </button>
-
-            </div>
-        </div>
-
-    </form>
-
-    <div class="card-footer footer-botom bg-white border-0">
-        <div class="text fs-5 fw-bold">
-            <div class="text-center" id="msg_feedback"></div>
         </div>
     </div>
 
