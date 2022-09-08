@@ -10,41 +10,8 @@
             </div>
 
             <!-- Ajustar após criação de app de Quizz -->
-            <div class="col-lg-4 d-none d-lg-flex">
-                <div class="card vh-75 vw-100">
-
-                    <img src="{% static 'blog/snipet-01.png' %}" class="card-img-top"
-                         alt="texto-questao">
-
-                    <div class="card-body">
-
-                        <div class="form-check">
-
-                            <ul class="list-group list-group-flush">
-                                {% for i in 'ABCDE' %}
-
-                                <div class="list-group-item">
-                                    <input class="form-check-input"
-                                           type="radio"
-                                           name="flexRadioDefault"
-                                           id="flexRadioDefault1">
-
-                                    <label class="form-check-label"
-                                           for="flexRadioDefault1">
-
-                                        Alternava {{i}}
-
-                                    </label>
-                                </div>
-
-                                {% endfor %}
-                            </ul>
-
-                            <a href="#" class="btn btn-success mt-2 d-grid">Responder</a>
-
-                        </div>
-                    </div>
-                </div>
+            <div class="col-lg-4 d-none d-lg-flex" hx-get="quiz/" hx-trigger="load">
+                {% include 'quiz/quiz.html' %}
             </div>
 
         </div>
