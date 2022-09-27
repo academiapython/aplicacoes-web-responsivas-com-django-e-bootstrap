@@ -9,7 +9,6 @@
                 {% include "fragments/card_base.html" with post=posts.0 %}
             </div>
 
-            <!-- Ajustar após criação de app de Quizz -->
             <div class="col-lg-4 d-none d-lg-flex" hx-get="quiz/" hx-trigger="load">
                 {% include 'quiz/quiz.html' %}
             </div>
