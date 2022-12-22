@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Primeiro Template</title>
+</head>
+<body>
+    <h1>Lita de posts cadastrados</h1>
+
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.titulo }} - {{ post.autor }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
