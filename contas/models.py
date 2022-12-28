@@ -9,6 +9,8 @@ class Perfil(models.Model):
     bio = models.TextField(blank=True, null=True, max_length=255)
     foto = models.ImageField(blank=True, null=True, default='', upload_to='contas/imagens')
 
+    def __str__(self):
+        return self.user.username
 
 @receiver(post_save, sender=User)
 def criar_perfil_usuario(sender, instance, created, **kwargs):

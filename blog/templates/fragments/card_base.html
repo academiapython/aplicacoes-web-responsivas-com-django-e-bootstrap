@@ -3,18 +3,19 @@
     <a href="{% url 'post_detail' post.id %}">
         <img src="{{ post.imagem_capa.url }}"
              class="card-img-top"
-             alt="imagem do card">
+             alt="imagem do card"
+             style="height:350px">
     </a>
 
     <div class="card-body pb-4">
         <a href="{% url 'post_detail' post.id %}" class="text-decoration-none text-dark">
             <h4 class="card-title">
-                {{ post.titulo }}
+                {{ post.titulo.foto }}
             </h4>
         </a>
 
         <p class="card-text">
-            {{ post.resumo|safe }}
+            {{ post.topico_set.first.conteudo|slice:":500"|safe }}...
         </p>
 
         <p class="card-text">

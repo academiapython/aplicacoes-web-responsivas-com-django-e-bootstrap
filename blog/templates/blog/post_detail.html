@@ -61,9 +61,11 @@
     <div class="row">
         <div class="col-12">
             <div class="d-flex flex-row align-items-center">
-                <div class="rounded-circle border d-flex justify-content-center
-                    align-items-center bg-info avatar">
-                    <!-- INSERIR IMAGEM AQUI... -->
+                <div class="rounded-circle d-flex justify-content-center
+                    align-items-center avatar">
+                    <img src="{{ post.autor.foto.url }}"
+                        style="heigt:85px; width:85px"
+                        class="rounded-circle">
                 </div>
 
                 <p class="mb-0">
@@ -76,7 +78,7 @@
                         <span>
                             <i class="fa-solid fa-clock"></i>
                             <span>
-                                30Min
+                                {{ post.tempo_leitura }}Min
                             </span>
                         </span>
 
@@ -84,14 +86,11 @@
 
                         <span class="mx-2"> <i class="fa-solid fa-tags"></i> </span>
 
-                        <span>
-                            <a href="#" class="text-decoration-none text-muted"> #Básico </a>
-                        </span>
-
-                        <span>
-                            <a href="#" class="text-decoration-none text-muted"> #Python </a>
-                        </span>
-
+                        {% for tag in post.tag_set.all %}
+                            <span>
+                                <a href="#" class="text-decoration-none text-muted"> #{{ tag.nome }} </a>
+                            </span>
+                        {% endfor %}
                         <br>
 
                          <span class="mx-2">
@@ -109,7 +108,10 @@
     <hr class="my-5">
 
     <article class="fs-4 px-lg-5 mx-lg-2">
-        {{post.conteudo|safe}}
+        {% for topico in post.topico_set.all %}
+            {{ topico.conteudo|safe }}
+            <br />
+        {% endfor %}
     </article>
 
     <hr class="my-5">
