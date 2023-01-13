@@ -73,4 +73,4 @@ class Comentario(models.Model):
     perfil = models.ForeignKey(Perfil, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.conteudo
+        return self.texto

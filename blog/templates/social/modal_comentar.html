@@ -1,0 +1,29 @@
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" action="{% url 'comentar_post_htmx' post.id %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Comentando o post {{ post.titulo }} </h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Comentário:</label>
+                        <textarea class="form-control" id="message-text" rows="5" name="comentario"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                    <button class="btn btn-primary"
+							hx-post="{% url 'comentarios' post.id %}"
+							hx-trigger="click" >
+						Comentar
+					</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="span me-3 btn"
+	hx-get="{% url 'comentar_post_htmx' post.id %}"
+	hx-target="#modals-here"
+	hx-trigger="click"
+	_="on htmx:afterOnLoad wait 10ms then add .show to #modal then add .show to #modal-backdrop">
+	<i class="fa-solid fa-comment fa-2xl"></i>
+
+	Comentar
+
+</div>
