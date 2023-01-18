@@ -24,21 +24,25 @@ def criar_conta(request):
         user = UserForm(request.POST)
         perfil = PerfilForm(request.POST, request.FILES)
 
-        usr = User.objects.create_user(
-            first_name=user.cleaned_data['first_name'],
-            last_name=user.cleaned_data['last_name'],
-            username=user.cleaned_data['username'],
-            email=user.cleaned_data['email'],
-            password=user.cleaned_data['password']
-        )
 
-        perl = Perfil(bio=perfil.cleaned_data['bio'],
-                      foto=perfil.cleaned_data['foto'],
-                      user=usr)
 
         if perfil.is_valid() and user.is_valid():
+
+            usr = User.objects.create_user(
+                first_name=user.cleaned_data['first_name'],
+                last_name=user.cleaned_data['last_name'],
+                username=user.cleaned_data['username'],
+                email=user.cleaned_data['email'],
+                password=user.cleaned_data['password']
+            )
+
+            perl = Perfil(bio=perfil.cleaned_data['bio'],
+                          foto=perfil.cleaned_data['foto'],
+                          user=usr)
             perl.save()
+
             return redirect('login')
+        
         else:
             return render(request, 'contas/criar_conta.html', {'form': user, 'form_perfil': perfil})
     else:
