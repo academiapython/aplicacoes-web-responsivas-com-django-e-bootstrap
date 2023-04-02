@@ -41,4 +41,5 @@ def comentar(request, post_id):
 
 def comentar_post(request, post_id):
     post = Post.objects.get(pk=post_id)
-    return render(request, "social/modal_comentar.html", {'post': post})
+    comentarios = Comentario.objects.filter(post=post)
+    return render(request, "social/modal_comentar.html", { 'post': post, 'comentarios':comentarios })
