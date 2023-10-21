@@ -4,7 +4,7 @@
         <div class="modal-content">
             <form>
                 {% csrf_token %}
-                <div class="modal-header">
+                <div class="modal-header border-0">
                     <h5 class="modal-title">
                         <div class="d-flex">
                             <div class="text-secondary me-1">Comentando o post</div>
@@ -40,55 +40,51 @@
                 </div>
 
                 <ul class="list-group list-group-flush">
+                    {% for comentario in comentarios %}
+                    <li class="list-group-item">
+                        <!-- CARD -->
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
 
-                    <!-- CARD -->
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
+                                <!-- COLUNA DO AVATAR -->
+                                <div class="col-md-1">
+                                    <img src="{{ comentario.perfil.foto.url }}"
+                                         style="height:35px; width: 35px"
+                                         class="rounded-circle mt-3 ms-2">
+                                </div>
 
-                            <!-- COLUNA DO AVATAR -->
-                            <div class="col-md-1">
-                                <img src="{{post.autor.foto.url}}"
-                                     style="height:35px; width: 35px"
-                                     class="rounded-circle mt-3 ms-2">
-                            </div>
+                                <!-- COLUNA DO CONTEÚDO -->
+                                <div class="col-md-9">
+                                    <div class="card-body">
 
-                            <!-- COLUNA DO CONTEÚDO -->
-                            <div class="col-md-9">
-                                <div class="card-body">
+                                        <!-- CONTEÚDO DO COMENTÁRIO -->
+                                        <p class="card-text"> {{ comentario.texto }}</p>
 
-                                    <!-- CONTEÚDO DO COMENTÁRIO -->
-                                    <p class="card-text">
-                                        This is a wider card with supporting text below as a natural
-                                        lead-in to additional content. This content is a little bit longer.</p>
+                                        <p class="card-text">
+                                            <small class="text-muted">
+                                                {{ comentario.perfil.user.username }}
+                                            </small>
+                                        </p>
+                                    </div>
+                                </div>
 
-                                    <p class="card-text">
-                                        <small class="text-muted">
-                                            Clayton Rodrigues, em 21-12-2012
-                                        </small>
-                                    </p>
+                                <!-- COLUNA BOTÕES DE EDIÇÃO E REMOÇÃO DE COMENTÁRIOS -->
+                                <div class="col-md-2">
+                                    <div class="row">
+                                        <div class="col-md mt-3 me-1">
+                                            <i class="fa-solid fa-pen fa-xs"></i>
+                                        </div>
+
+                                        <div class="col-md  mt-3 me-1">
+                                            <i class="fa-solid fa-trash fa-xs"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- COLUNA BOTÕES DE EDIÇÃO E REMOÇÃO DE COMENTÁRIOS -->
-                            <div class="col-md-2">
-                                <div class="row">
-                                    <div class="col-md mt-3 me-1">
-                                        <i class="fa-solid fa-pen fa-xs"></i>
-                                    </div>
-
-                                    <div class="col-md  mt-3 me-1">
-                                        <i class="fa-solid fa-trash fa-xs"></i>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-
-                    </div>
-
-                    <li class="list-group-item">Primeiro</li>
-                    <li class="list-group-item">Primeiro</li>
-                    <li class="list-group-item">Primeiro</li>
-                    <li class="list-group-item">Primeiro</li>
+                    </li>
+                    {% endfor %}
                 </ul>
 
             </form>
