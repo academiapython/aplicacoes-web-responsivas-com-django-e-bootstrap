@@ -43,3 +43,10 @@ def comentar_post(request, post_id):
     post = Post.objects.get(pk=post_id)
     comentarios = Comentario.objects.filter(post=post)
     return render(request, "social/modal_comentar.html", { 'post': post, 'comentarios':comentarios })
+
+def deletar_comentario(request, comentario_id):
+    post = Comentario.objects.get(pk=comentario_id).post
+    comentario = Comentario.objects.get(pk=comentario_id)
+    comentario.delete()
+    comentarios = Comentario.objects.filter(post=post)
+    return render(request, "social/modal_comentar.html", {'post': post, 'comentarios': comentarios })

@@ -3,7 +3,6 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form>
-                {% csrf_token %}
                 <div class="modal-header border-0">
                     <h5 class="modal-title">
                         <div class="d-flex">
@@ -70,14 +69,24 @@
 
                                 <!-- COLUNA BOTÕES DE EDIÇÃO E REMOÇÃO DE COMENTÁRIOS -->
                                 <div class="col-md-2">
+
                                     <div class="row">
+
+                                        <!-- BOTÃO DE EDIÇÃO -->
                                         <div class="col-md mt-3 me-0">
                                             <i class="fa-solid fa-pen fa-xs"></i>
                                         </div>
 
-                                        <div class="col-md  mt-3 me-0">
+                                        <!-- BOTÃO DE EXCLUSÃO -->
+                                        <div class="col-md  mt-3 me-0"
+                                             hx-delete="{% url 'deletar_comentario_htmx' comentario.id %}"
+                                             hx-trigger="click"
+                                             onclick="closeModal()"
+                                             hx-confirm="Deseja excluir o comentário?"
+                                        >
                                             <i class="fa-solid fa-trash fa-xs"></i>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

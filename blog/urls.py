@@ -10,5 +10,6 @@ urlpatterns = [
     path('posts/<int:post_id>/post_detail', views.post_detail, name='post_detail'),
     path('posts/<int:post_id>/comentarios', views.comentar, name='comentarios'),
     path('posts/comentarios/<int:post_id>', views.comentar_post, name='comentar_post_htmx'),
+    path('posts/comentarios/deletar/<int:comentario_id>', views.deletar_comentario, name='deletar_comentario_htmx'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
