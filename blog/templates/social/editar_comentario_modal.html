@@ -1,0 +1,15 @@
+{% extends 'social/modal_base.html' %}
+
+
+{% block btn_salvar_editar_comentario %}
+    <button class="btn btn-success"
+        hx-post="{% url 'editar_comentario_htmx' comentario.id %}"
+        hx-trigger="click"
+        onclick="closeModal()">
+
+        Editar
+
+    </button>
+{% endblock %}
+
+ {% block lista_de_comentarios %} {% endblock %}

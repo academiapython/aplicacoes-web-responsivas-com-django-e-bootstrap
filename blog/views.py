@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from .models import Post, Comentario
+from django.shortcuts import redirect
 
 
 def home(request):
@@ -50,3 +51,20 @@ def deletar_comentario(request, comentario_id):
     comentario.delete()
     comentarios = Comentario.objects.filter(post=post)
     return render(request, "social/modal_comentar.html", {'post': post, 'comentarios': comentarios })
+
+def editar_comentario(request, comentario_id):
+    post = Comentario.objects.get(pk=comentario_id).post
+    comentario = Comentario.objects.get(pk=comentario_id)
+
+    context = {
+        'comentario': comentario,
+        'post': post
+    }
+
+    if request.method == "GET":
+        return render(request, 'social/editar_comentario_modal.html', context)
+    elif request.method == "POST":
+        comentario.texto = request.POST['comentario']
+        comentario.save()
+        return redirect(request.path)
+    return render(request, "social/editar_comentario_modal.html", context)
